@@ -1,0 +1,12 @@
+https://secrets-api.appbrewery.com/
+
+{
+    "apiKey": "d28b067e-bb59-4410-9408-5013f5e27513"
+}
+
+user: Alastair45
+pass: Nathaniel4567
+
+{
+    "token": "53f4cf56-2db2-47ab-8b91-7e15112c96e2"
+}
