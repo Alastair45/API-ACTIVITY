@@ -11,68 +11,37 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
 
 
-
-let books = [
-    {
-        id: 1,
-        title: "Call of Cthulhu",
-        author: "H.P. Lovecraft",
-        publisher: "England Publishers Inc."
-    },
-    {
-        id: 2,
-        title: "The Shadow over Innsmouth",
-        author: "H.P. Lovecraft",
-        publisher: "Arkham House"
-    },
-    {
-        id: 3,
-        title: "At the Mountains of Madness",
-        author: "H.P. Lovecraft",
-        publisher: "Doubleday"
-    },
-    {
-        id: 4,
-        title: "The Dunwich Horror",
-        author: "H.P. Lovecraft",
-        publisher: "Weird Tales Press"
-    },
-    {
-        id: 5,
-        title: "The Colour Out of Space",
-        author: "H.P. Lovecraft",
-        publisher: "Century Publications"
-    },
-    {
-        id: 6,
-        title: "The Whisperer in Darkness",
-        author: "H.P. Lovecraft",
-        publisher: "Visionary Press"
-    },
-    {
-        id: 7,
-        title: "The Haunter of the Dark",
-        author: "H.P. Lovecraft",
-        publisher: "Strange Horizons"
-    },
-    {
-        id: 8,
-        title: "The Shadow Out of Time",
-        author: "H.P. Lovecraft",
-        publisher: "Horror House"
-    },
-    {
-        id: 9,
-        title: "The Dreams in the Witch House",
-        author: "H.P. Lovecraft",
-        publisher: "Gothic Press"
-    },
-    {
-        id: 10,
-        title: "The Case of Charles Dexter Ward",
-        author: "H.P. Lovecraft",
-        publisher: "Cthulhu Press"
-    }
+let posts = [
+  {
+    "title": "My First Blog Post",
+    "content": "This is the content of the blog.",
+    "author": "John Doe"
+  },
+  {
+    "title": "Why I Love JavaScript",
+    "content": "JavaScript is a powerful language that allows me to build interactive websites and dynamic applications.",
+    "author": "Jane Smith"
+  },
+  {
+    "title": "A Day in the Life of a Developer",
+    "content": "From morning standups to late-night debugging, here's what a typical day looks like for a software developer.",
+    "author": "Mike Ross"
+  },
+  {
+    "title": "Tips for Learning Programming",
+    "content": "Stay consistent, build projects, and never be afraid to ask questions. These tips helped me grow as a programmer.",
+    "author": "Emily Clarke"
+  },
+  {
+    "title": "The Future of Web Development",
+    "content": "With technologies like WebAssembly, AI integrations, and progressive web apps, web development is rapidly evolving.",
+    "author": "Liam Johnson"
+  },
+  {
+    "title": "How I Built My Portfolio Website",
+    "content": "Using HTML, CSS, and a bit of JavaScript magic, I created a sleek and responsive personal portfolio.",
+    "author": "Sophie Lee"
+  }
 ];
 
 //Root
@@ -80,58 +49,58 @@ app.get('/', (req, res) => {
     res.send('<h1>WELCOME TO THE ROOT PAGE!</h1>');
 });
 
-//Retrieve all books
-app.get('/books', auth, (req, res) => {
-    res.json(books);
+//Retrieve all posts
+app.get('/posts', auth, (req, res) => {
+    res.json(posts);
 });
 
-//Get details of specific books
-app.get('/books/:id', (req, res) => {
+//Get details of specific posts
+app.get('/posts/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const index = books.findIndex((element) => element.id === id);
-    if (index < 0 || index >= books.length) {
+    const index = posts.findIndex((element) => element.id === id);
+    if (index < 0 || index >= posts.length) {
         return res.status(400).json({ message: "No book found in index " + id});
     }
-    res.json(books[index]);
+    res.json(posts[index]);
 });
 
 //Add a new book
-app.post('/books', (req, res) => {
+app.post('/posts', (req, res) => {
     const newBook = {
-        id: books.length + 1,
+        id: posts.length + 1,
         title: req.body.title,
         author: req.body.author,
         publisher: req.body.publisher
     };
-    books.push(newBook);
-    res.status(200).json({message: "Book successfully added at id " + (books.length)});
+    posts.push(newBook);
+    res.status(200).json({message: "Book successfully added at id " + (posts.length)});
 });
 
 //Modify book info
-app.patch('/books/:id', (req, res) => {
+app.put('/posts/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const index = books.findIndex((element) => element.id === id);
+    const index = posts.findIndex((element) => element.id === id);
     if (index === -1) return res.status(404).json({error: "Book Not Found"});
     
-    books[index] = { ...books[index], ...req.body};
-    res.json({message: "Book Updated", book: books[index]});
+    posts[index] = { ...posts[index], ...req.body};
+    res.json({message: "Book Updated", book: posts[index]});
 });
 
 //Delete a certain book
-app.delete('/books/:id', (req, res) =>
+app.delete('/posts/:id', (req, res) =>
     {
     const id = parseInt(req.params.id);
-    const index = books.findIndex((element) => element.id === id);
-    if (index < 0 || index >= books.length)
+    const index = posts.findIndex((element) => element.id === id);
+    if (index < 0 || index >= posts.length)
         {
         return res.status(400).json({ message: "No book found in index " + id});
         }
-    books.splice(index, 1);
+    posts.splice(index, 1);
     res.json({message: "Item deleted successfully!"});
     });
 
 //Login
-app.post('/books/login', (req, res) => {
+app.post('/posts/login', (req, res) => {
     const {username, password} = req.body;
 
     if (username === 'Alastair45' && password === 'ZinogreSlayer45')
